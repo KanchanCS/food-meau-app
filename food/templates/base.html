@@ -25,17 +25,22 @@
         <a class="nav-item nav-link" href="{% url "create_item" %}">Add Item</a>
         <a class="nav-item nav-link" href="#">Delete Item</a>
         <a class="nav-item nav-link" href="#">View Item</a>
+        {% if user.is_authenticated %}
+        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
       </div>
     </nav>
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-{{ message.tag }}"> 
-       
+    <div class="alert alert-{{ message.tags }}"> 
+      {{ message }}
     </div>
-    {{ message }}
+    
     {% endfor %}
     {% endif %}
-    <div class="alert alert-{{ message.tags }}" role="alert"> 
     {% block content %}{% endblock content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
