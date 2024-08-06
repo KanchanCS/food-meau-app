@@ -2,7 +2,8 @@ from django.shortcuts import HttpResponse, redirect, render
 
 from .forms import ItemForm
 from .models import Item
-
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 # Create your views here.
 def index(requset):
@@ -12,6 +13,11 @@ def index(requset):
     }
     return render(requset,'index.html',context)
 
+
+class IndexClassView(ListView):
+    model = Item;
+    template_name = 'index.html'
+    context_object_name = 'item_list'
 
 def item(request):
     return HttpResponse("item page")
@@ -23,6 +29,10 @@ def detail(request,item_id):
         'item':item,
     }    
     return render(request, 'detail.html',context)
+
+class FoodDetail(DetailView):
+    model = Item
+    template_name = 'detail.html'
 
 def create_item(request):
     if request.method == 'POST':
