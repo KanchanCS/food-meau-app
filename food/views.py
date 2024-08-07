@@ -1,9 +1,11 @@
 from django.shortcuts import HttpResponse, redirect, render
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 
 from .forms import ItemForm
 from .models import Item
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
+
 
 # Create your views here.
 def index(requset):
@@ -43,6 +45,17 @@ def create_item(request):
     else:
         form=ItemForm()
     return render(request,'item-form.html',{'form':form})
+
+# this is a class based view for create item
+class CreateItem(CreateView):
+    model = Item;
+    fields = ['item_name','item_desc','item_price', 'item_image']
+    template_name = 'item-form.html'
+    
+    def form_valid(self,form):
+        form.instance.user_name = self.request.user
+        return super().form_valid(form)
+                                                          
 
 def update_item(request, id):
     item = Item.objects.get(id=id)
