@@ -6,9 +6,12 @@ from .serializers import MovieSerializer
 
 # Create your views here.
 
+
+
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Moviedata.objects.all()
     serializer_class = MovieSerializer
+   
     
 class ActionViewSet(viewsets.ModelViewSet):
     queryset = Moviedata.objects.filter(typ= 'action')

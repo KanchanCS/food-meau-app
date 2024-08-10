@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import HttpResponse, redirect, render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -8,18 +9,33 @@ from .models import Item
 
 
 # Create your views here.
-def index(requset):
-    item_list = Item.objects.all()
+def index(request):
+    item_list = Item.objects.all()  
+    page = request.GET.get('page',1) 
+    #pagination
+   
+   
+    if request.method=="GET":        #search item
+        st=request.GET.get('searchname')
+        if st!=None:
+            page=Item.objects.filter(name="st")
+    
     context = {
-        'item_list':item_list,
+        'item_list':item_list
     }
-    return render(requset,'index.html',context)
+    return render(request,'index.html',context)
 
 
 class IndexClassView(ListView):
     model = Item;
     template_name = 'index.html'
     context_object_name = 'item_list'
+
+def search(request):
+    query = request.GET['query']
+    item_list = Item.objects.filter(item_name__icontains=query)
+    context = {'item_list':item_list}
+    return render(request, 'search.html', context)
 
 def item(request):
     return HttpResponse("item page")

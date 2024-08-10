@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %} {% for item in item_list %}
+{% extends "base.html" %} {% block title %} Search Result {% endblock title %}
+{% block content %} {% for item in item_list %}
 
 <div class="row">
   <div class="col-md-3 offset-md-2">
@@ -15,10 +16,4 @@
     <a href="{% url 'detail' item.id %}" class="btn btn-success">Details</a>
   </div>
 </div>
-{% endfor %} {% endblock content %} {% comment %}
-<ul>
-  <li>
-    <a href="{% url 'detail' item.id %}"> {{item.id}} -- {{item.item_name}}</a>
-  </li>
-</ul>
-{% endcomment %}
+{% endfor %} {% endblock content %}
