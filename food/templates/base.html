@@ -19,9 +19,19 @@
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
-      <a href="#" class="navbar-brand">FoodApp</a>
+      <a href="{% url "index" %}" class="navbar-brand">FoodApp</a>
 
       <div class="navbar">
+        <form action="/search" method="get" class="form-inline">
+          <input
+            id = "query"
+            type="text"
+            name="query"
+            placeholder="Search by Food ...."
+            class="form-control"
+          />
+        
+        </form>
         <a class="nav-item nav-link" href="{% url "create_item" %}">Add Item</a>
         <a class="nav-item nav-link" href="#">Delete Item</a>
         <a class="nav-item nav-link" href="#">View Item</a>
